@@ -19,6 +19,9 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Gfx
         #region // storage
 
         /// <inheritdoc />
+        protected override string ThreadName => nameof(WindowOverlay);
+
+        /// <inheritdoc />
         protected override TimeSpan ThreadFrameSleep { get; set; } = new TimeSpan(0, 0, 0, 0, 500);
 
         /// <inheritdoc cref="GameProcess"/>

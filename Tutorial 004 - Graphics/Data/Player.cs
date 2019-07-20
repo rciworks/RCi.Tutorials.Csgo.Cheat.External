@@ -1,5 +1,5 @@
 ﻿using System;
-using RCi.Tutorials.Csgo.Cheat.External.Math;
+using Microsoft.DirectX;
 using RCi.Tutorials.Csgo.Cheat.External.Utils;
 
 namespace RCi.Tutorials.Csgo.Cheat.External.Data

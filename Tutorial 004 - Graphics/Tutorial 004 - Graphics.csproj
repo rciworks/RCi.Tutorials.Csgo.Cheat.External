@@ -37,6 +37,18 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.DirectX, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\Microsoft.DirectX.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.DirectX.Direct3D, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\Microsoft.DirectX.Direct3D.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.DirectX.Direct3DX, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\Microsoft.DirectX.Direct3DX.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -54,8 +66,9 @@
     <Compile Include="Data\GameData.cs" />
     <Compile Include="Data\GameProcess.cs" />
     <Compile Include="Data\Player.cs" />
+    <Compile Include="Gfx\DeviceExtensions.cs" />
+    <Compile Include="Gfx\Graphics.cs" />
     <Compile Include="Gfx\WindowOverlay.cs" />
-    <Compile Include="Math\Vector3.cs" />
     <Compile Include="Offsets.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -65,6 +78,7 @@
     <Compile Include="Sys\Dwmapi.cs" />
     <Compile Include="Sys\Kernel32.cs" />
     <Compile Include="Sys\User32.cs" />
+    <Compile Include="Utils\FpsCounter.cs" />
     <Compile Include="Utils\Module.cs" />
     <Compile Include="Utils\ThreadedComponent.cs" />
     <Compile Include="Utils\U.cs" />

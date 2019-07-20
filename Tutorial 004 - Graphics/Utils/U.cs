@@ -41,6 +41,16 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Utils
         }
 
         /// <summary>
+        /// Check if value is infinity or NaN.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static bool IsInfinityOrNaN(this float value)
+        {
+            return float.IsNaN(value) || float.IsInfinity(value);
+        }
+
+        /// <summary>
         /// Get if process is running.
         /// </summary>
         public static bool IsRunning(this System.Diagnostics.Process process)
@@ -58,6 +68,14 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Utils
                 return false;
             }
             return true;
+        }
+
+        /// <summary>
+        /// Check if vector is valid to draw in screen space.
+        /// </summary>
+        public static bool IsValidScreen(this Microsoft.DirectX.Vector3 value)
+        {
+            return !value.X.IsInfinityOrNaN() && !value.Y.IsInfinityOrNaN() && value.Z >= 0 && value.Z < 1;
         }
 
         /// <summary>

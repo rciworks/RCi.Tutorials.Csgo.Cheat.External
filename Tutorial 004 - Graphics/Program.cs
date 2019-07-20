@@ -30,6 +30,9 @@ namespace RCi.Tutorials.Csgo.Cheat.External
         /// <inheritdoc cref="WindowOverlay"/>
         private WindowOverlay WindowOverlay { get; set; }
 
+        /// <inheritdoc cref="Graphics"/>
+        private Graphics Graphics { get; set; }
+
         #endregion
 
         #region // ctor
@@ -47,15 +50,20 @@ namespace RCi.Tutorials.Csgo.Cheat.External
             GameProcess = new GameProcess();
             GameData = new GameData(GameProcess);
             WindowOverlay = new WindowOverlay(GameProcess);
+            Graphics = new Graphics(WindowOverlay, GameProcess, GameData);
 
             GameProcess.Start();
             GameData.Start();
             WindowOverlay.Start();
+            Graphics.Start();
         }
 
         /// <inheritdoc />
         public void Dispose()
         {
+            Graphics.Dispose();
+            Graphics = default;
+
             WindowOverlay.Dispose();
             WindowOverlay = default;
 
