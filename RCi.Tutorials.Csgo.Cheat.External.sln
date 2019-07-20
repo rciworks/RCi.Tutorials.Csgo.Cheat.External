@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tutorial 004 - Graphics", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tutorial 005 - ESP Aim Crosshair", "Tutorial 005 - ESP Aim Crosshair\Tutorial 005 - ESP Aim Crosshair.csproj", "{DD61DD25-8A4C-4FDD-9A4A-104CD3780816}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tutorial 006 - ESP Skeleton", "Tutorial 006 - ESP Skeleton\Tutorial 006 - ESP Skeleton.csproj", "{A3CEDBFC-1315-45A5-B79E-874C25167980}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{DD61DD25-8A4C-4FDD-9A4A-104CD3780816}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD61DD25-8A4C-4FDD-9A4A-104CD3780816}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD61DD25-8A4C-4FDD-9A4A-104CD3780816}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3CEDBFC-1315-45A5-B79E-874C25167980}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3CEDBFC-1315-45A5-B79E-874C25167980}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3CEDBFC-1315-45A5-B79E-874C25167980}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3CEDBFC-1315-45A5-B79E-874C25167980}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
