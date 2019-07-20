@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tutorial 002 - Read Memory"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tutorial 003 - Overlay Window", "Tutorial 003 - Overlay Window\Tutorial 003 - Overlay Window.csproj", "{8B39ED50-590B-4DF0-8677-79CBF4D05A7A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tutorial 004 - Graphics", "Tutorial 004 - Graphics\Tutorial 004 - Graphics.csproj", "{890BA6F4-46E8-4C15-AABC-ABA2C3A40400}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{8B39ED50-590B-4DF0-8677-79CBF4D05A7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B39ED50-590B-4DF0-8677-79CBF4D05A7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B39ED50-590B-4DF0-8677-79CBF4D05A7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{890BA6F4-46E8-4C15-AABC-ABA2C3A40400}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{890BA6F4-46E8-4C15-AABC-ABA2C3A40400}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{890BA6F4-46E8-4C15-AABC-ABA2C3A40400}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{890BA6F4-46E8-4C15-AABC-ABA2C3A40400}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
