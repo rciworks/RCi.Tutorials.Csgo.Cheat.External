@@ -135,12 +135,6 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Data.Internal
             {
                 StudioHitBoxes[i] = gameProcess.Process.Read<mstudiobbox_t>(addressHitBoxSet + StudioHitBoxSet.hitboxindex + i * Marshal.SizeOf<mstudiobbox_t>());
             }
-
-            // pad
-            for (var i = StudioHitBoxSet.numhitboxes; i < Offsets.MAXSTUDIOBONES; i++)
-            {
-                StudioHitBoxes[i].bone = -1;
-            }
         }
 
         /// <summary>
