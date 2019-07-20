@@ -149,7 +149,7 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Data.Internal
         }
 
         /// <summary>
-        /// Update <see cref="StudioHdr"/>.
+        /// Update <see cref="BonesMatrices"/> and <see cref="BonesPos"/>.
         /// </summary>
         private void UpdateBonesMatricesAndPos(GameProcess gameProcess)
         {
@@ -163,7 +163,7 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Data.Internal
         }
 
         /// <summary>
-        /// Update <see cref="StudioHdr"/>.
+        /// Update <see cref="StudioBones"/>.
         /// </summary>
         private void UpdateSkeleton()
         {
