@@ -121,8 +121,6 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Gfx
         {
             System.Windows.Application.Current.Dispatcher.Invoke(() =>
             {
-                Window.BackColor = Color.Blue; // TODO: temporary
-
                 if (Window.Location != windowRectangleClient.Location || Window.Size != windowRectangleClient.Size)
                 {
                     if (windowRectangleClient.Width > 0 && windowRectangleClient.Height > 0)

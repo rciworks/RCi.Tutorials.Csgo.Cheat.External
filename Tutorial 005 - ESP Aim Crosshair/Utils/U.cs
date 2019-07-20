@@ -10,6 +10,34 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Utils
     /// </summary>
     public static class U
     {
+        #region // degrees <-> radians
+
+        private const double _PI_Over_180 = Math.PI / 180.0;
+
+        private const double _180_Over_PI = 180.0 / Math.PI;
+
+        public static double DegreeToRadian(this double degree)
+        {
+            return degree * _PI_Over_180;
+        }
+
+        public static double RadianToDegree(this double radian)
+        {
+            return radian * _180_Over_PI;
+        }
+
+        public static float DegreeToRadian(this float degree)
+        {
+            return (float)(degree * _PI_Over_180);
+        }
+
+        public static float RadianToDegree(this float radian)
+        {
+            return (float)(radian * _180_Over_PI);
+        }
+
+        #endregion
+
         /// <summary>
         /// Get window client rectangle.
         /// </summary>

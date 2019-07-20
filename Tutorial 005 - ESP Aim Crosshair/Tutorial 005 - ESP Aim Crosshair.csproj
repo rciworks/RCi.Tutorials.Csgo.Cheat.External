@@ -66,7 +66,9 @@
     <Compile Include="Data\GameData.cs" />
     <Compile Include="Data\GameProcess.cs" />
     <Compile Include="Data\Player.cs" />
+    <Compile Include="Features\EspAimCrosshair.cs" />
     <Compile Include="Gfx\DeviceExtensions.cs" />
+    <Compile Include="Gfx\GfxMath.cs" />
     <Compile Include="Gfx\Graphics.cs" />
     <Compile Include="Gfx\WindowOverlay.cs" />
     <Compile Include="Offsets.cs" />
