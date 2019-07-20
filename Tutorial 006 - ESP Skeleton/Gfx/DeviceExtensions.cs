@@ -12,9 +12,18 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Gfx
     public static class DeviceExtensions
     {
         /// <summary>
+        /// Draw polyline in world space.
+        /// </summary>
+        public static void DrawPolylineWorld(this Graphics graphics, Color color, params Vector3[] verticesWorld)
+        {
+            var verticesScreen = verticesWorld.Select(v => graphics.GameData.Player.MatrixViewProjectionViewport.Transform(v)).ToArray();
+            graphics.DrawPolylineScreen(verticesScreen, color);
+        }
+
+        /// <summary>
         /// Draw 2D polyline in screen space.
         /// </summary>
-        public static void DrawPolyline(this Device device, Vector3[] vertices, Color color)
+        public static void DrawPolylineScreen(this Graphics graphics, Vector3[] vertices, Color color)
         {
             if (vertices.Length < 2 || vertices.Any(v => !v.IsValidScreen()))
             {
@@ -22,8 +31,8 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Gfx
             }
 
             var vertexStreamZeroData = vertices.Select(v => new CustomVertex.TransformedColored(v.X, v.Y, v.Z, 0, color.ToArgb())).ToArray();
-            device.VertexFormat = VertexFormats.Diffuse | VertexFormats.Transformed;
-            device.DrawUserPrimitives(PrimitiveType.LineStrip, vertexStreamZeroData.Length - 1, vertexStreamZeroData);
+            graphics.Device.VertexFormat = VertexFormats.Diffuse | VertexFormats.Transformed;
+            graphics.Device.DrawUserPrimitives(PrimitiveType.LineStrip, vertexStreamZeroData.Length - 1, vertexStreamZeroData);
         }
     }
 }

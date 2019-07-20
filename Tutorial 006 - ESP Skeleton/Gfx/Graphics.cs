@@ -139,6 +139,7 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Gfx
             DrawWindowBorder();
             DrawFps();
             EspAimCrosshair.Draw(this);
+            EspSkeleton.Draw(this);
         }
 
         /// <summary>
@@ -154,7 +155,7 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Gfx
         /// </summary>
         private void DrawWindowBorder()
         {
-            Device.DrawPolyline(new[]
+            this.DrawPolylineScreen(new[]
             {
                 new Vector3(0, 0, 0),
                 new Vector3(GameProcess.WindowRectangleClient.Width - 1, 0, 0),

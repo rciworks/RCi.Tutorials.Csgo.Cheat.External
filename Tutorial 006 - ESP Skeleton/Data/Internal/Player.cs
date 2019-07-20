@@ -3,14 +3,20 @@ using Microsoft.DirectX;
 using RCi.Tutorials.Csgo.Cheat.External.Gfx;
 using RCi.Tutorials.Csgo.Cheat.External.Utils;
 
-namespace RCi.Tutorials.Csgo.Cheat.External.Data
+namespace RCi.Tutorials.Csgo.Cheat.External.Data.Internal
 {
     /// <summary>
     /// Player data.
     /// </summary>
-    public class Player
+    public class Player :
+        EntityBase
     {
         #region // storage
+
+        /// <summary>
+        /// Matrix from world space to clipping space.
+        /// </summary>
+        public Matrix MatrixViewProjection { get; private set; }
 
         /// <summary>
         /// Matrix from clipping space to screen space.
@@ -18,9 +24,9 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Data
         public Matrix MatrixViewport { get; private set; }
 
         /// <summary>
-        /// Model origin (in world).
+        /// Matrix from world space to screen space.
         /// </summary>
-        public Vector3 Origin { get; private set; }
+        public Matrix MatrixViewProjectionViewport { get; private set; }
 
         /// <summary>
         /// Local offset from model origin to player eyes.
@@ -56,31 +62,37 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Data
 
         #region // routines
 
-        /// <summary>
-        /// Update data from process.
-        /// </summary>
-        public void Update(GameProcess gameProcess)
+        /// <inheritdoc />
+        protected override IntPtr ReadAddressBase(GameProcess gameProcess)
         {
-            var addressBase = gameProcess.ModuleClient.Read<IntPtr>(Offsets.dwLocalPlayer);
-            if (addressBase == IntPtr.Zero)
+            return gameProcess.ModuleClient.Read<IntPtr>(Offsets.dwLocalPlayer);
+        }
+
+        /// <inheritdoc />
+        public override bool Update(GameProcess gameProcess)
+        {
+            if (!base.Update(gameProcess))
             {
-                return;
+                return false;
             }
 
             // get matrices
+            MatrixViewProjection = Matrix.TransposeMatrix(gameProcess.ModuleClient.Read<Matrix>(Offsets.dwViewMatrix));
             MatrixViewport = GfxMath.GetMatrixViewport(gameProcess.WindowRectangleClient.Size);
+            MatrixViewProjectionViewport = MatrixViewProjection * MatrixViewport;
 
             // read data
-            Origin = gameProcess.Process.Read<Vector3>(addressBase + Offsets.m_vecOrigin);
-            ViewOffset = gameProcess.Process.Read<Vector3>(addressBase + Offsets.m_vecViewOffset);
+            ViewOffset = gameProcess.Process.Read<Vector3>(AddressBase + Offsets.m_vecViewOffset);
             EyePosition = Origin + ViewOffset;
             ViewAngles = gameProcess.Process.Read<Vector3>(gameProcess.ModuleEngine.Read<IntPtr>(Offsets.dwClientState) + Offsets.dwClientState_ViewAngles);
-            AimPunchAngle = gameProcess.Process.Read<Vector3>(addressBase + Offsets.m_aimPunchAngle);
-            Fov = gameProcess.Process.Read<int>(addressBase + Offsets.m_iFOV);
+            AimPunchAngle = gameProcess.Process.Read<Vector3>(AddressBase + Offsets.m_aimPunchAngle);
+            Fov = gameProcess.Process.Read<int>(AddressBase + Offsets.m_iFOV);
             if (Fov == 0) Fov = 90; // correct for default
 
             // calc data
             AimDirection = GetAimDirection(ViewAngles, AimPunchAngle);
+
+            return true;
         }
 
         /// <summary>

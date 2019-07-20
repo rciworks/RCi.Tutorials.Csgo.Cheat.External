@@ -47,8 +47,8 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Features
         {
             const int radius = 3;
             var color = System.Drawing.Color.Red;
-            graphics.Device.DrawPolyline(new[] { pointScreen - new Vector3(radius, 0, 0), pointScreen + new Vector3(radius + 1, 0, 0), }, color);
-            graphics.Device.DrawPolyline(new[] { pointScreen - new Vector3(0, radius, 0), pointScreen + new Vector3(0, radius + 1, 0), }, color);
+            graphics.DrawPolylineScreen(new[] { pointScreen - new Vector3(radius, 0, 0), pointScreen + new Vector3(radius + 1, 0, 0), }, color);
+            graphics.DrawPolylineScreen(new[] { pointScreen - new Vector3(0, radius, 0), pointScreen + new Vector3(0, radius + 1, 0), }, color);
         }
     }
 }

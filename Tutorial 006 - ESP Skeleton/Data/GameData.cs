@@ -1,4 +1,6 @@
-﻿using RCi.Tutorials.Csgo.Cheat.External.Utils;
+﻿using System.Linq;
+using RCi.Tutorials.Csgo.Cheat.External.Data.Internal;
+using RCi.Tutorials.Csgo.Cheat.External.Utils;
 
 namespace RCi.Tutorials.Csgo.Cheat.External.Data
 {
@@ -19,6 +21,9 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Data
         /// <inheritdoc cref="Player"/>
         public Player Player { get; set; }
 
+        /// <inheritdoc cref="Entity"/>
+        public Entity[] Entities { get; private set; }
+
         #endregion
 
         #region // ctor
@@ -28,6 +33,7 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Data
         {
             GameProcess = gameProcess;
             Player = new Player();
+            Entities = Enumerable.Range(0, 64).Select(index => new Entity(index)).ToArray();
         }
 
         /// <inheritdoc />
@@ -35,6 +41,7 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Data
         {
             base.Dispose();
 
+            Entities = default;
             Player = default;
             GameProcess = default;
         }
@@ -50,6 +57,10 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Data
             }
 
             Player.Update(GameProcess);
+            foreach (var entity in Entities)
+            {
+                entity.Update(GameProcess);
+            }
         }
     }
 }

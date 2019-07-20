@@ -135,5 +135,49 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Utils
             Kernel32.ReadProcessMemory(hProcess, lpBaseAddress, buffer, size, out var lpNumberOfBytesRead);
             return lpNumberOfBytesRead == size ? (T)buffer : default;
         }
+
+        /// <summary>
+        /// Convert to matrix 4x4.
+        /// </summary>
+        public static Microsoft.DirectX.Matrix ToMatrix(this in Data.Raw.matrix3x4_t matrix)
+        {
+            return new Microsoft.DirectX.Matrix
+            {
+                M11 = matrix.m00,
+                M12 = matrix.m01,
+                M13 = matrix.m02,
+
+                M21 = matrix.m10,
+                M22 = matrix.m11,
+                M23 = matrix.m12,
+
+                M31 = matrix.m20,
+                M32 = matrix.m21,
+                M33 = matrix.m22,
+
+                M41 = matrix.m30,
+                M42 = matrix.m31,
+                M43 = matrix.m32,
+                M44 = 1,
+            };
+        }
+
+        /// <summary>
+        /// Convert value to team.
+        /// </summary>
+        public static Data.Raw.Team ToTeam(this int teamNum)
+        {
+            switch (teamNum)
+            {
+                case 1:
+                    return Data.Raw.Team.Spectator;
+                case 2:
+                    return Data.Raw.Team.Terrorists;
+                case 3:
+                    return Data.Raw.Team.CounterTerrorists;
+                default:
+                    return Data.Raw.Team.Unknown;
+            }
+        }
     }
 }
