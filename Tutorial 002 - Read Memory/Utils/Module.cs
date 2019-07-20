@@ -12,10 +12,10 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Utils
         #region // storage
 
         /// <inheritdoc cref="Process"/>
-        private Process Process { get; set; }
+        public Process Process { get; private set; }
 
         /// <inheritdoc cref="ProcessModule"/>
-        private ProcessModule ProcessModule { get; set; }
+        public ProcessModule ProcessModule { get; private set; }
 
         #endregion
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Runtime.InteropServices;
 using RCi.Tutorials.Csgo.Cheat.External.Sys;
 
 namespace RCi.Tutorials.Csgo.Cheat.External.Utils
@@ -57,6 +58,36 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Utils
                 return false;
             }
             return true;
+        }
+
+        /// <summary>
+        /// Read process memory.
+        /// </summary>
+        public static T Read<T>(this System.Diagnostics.Process process, IntPtr lpBaseAddress)
+            where T : unmanaged
+        {
+            return Read<T>(process.Handle, lpBaseAddress);
+        }
+
+        /// <summary>
+        /// Read process memory from module.
+        /// </summary>
+        public static T Read<T>(this Module module, int offset)
+            where T : unmanaged
+        {
+            return Read<T>(module.Process.Handle, module.ProcessModule.BaseAddress + offset);
+        }
+
+        /// <summary>
+        /// Read process memory.
+        /// </summary>
+        public static T Read<T>(IntPtr hProcess, IntPtr lpBaseAddress)
+            where T : unmanaged
+        {
+            var size = Marshal.SizeOf<T>();
+            var buffer = (object)default(T);
+            Kernel32.ReadProcessMemory(hProcess, lpBaseAddress, buffer, size, out var lpNumberOfBytesRead);
+            return lpNumberOfBytesRead == size ? (T)buffer : default;
         }
     }
 }

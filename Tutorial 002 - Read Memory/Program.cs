@@ -21,6 +21,7 @@ namespace RCi.Tutorials.Csgo.Cheat.External
 
         /// <inheritdoc cref="GameProcess"/>
         private GameProcess GameProcess { get; set; }
+        private GameData GameData { get; set; }
 
         #endregion
 
@@ -37,12 +38,18 @@ namespace RCi.Tutorials.Csgo.Cheat.External
         public void Ctor()
         {
             GameProcess = new GameProcess();
+            GameData = new GameData(GameProcess);
+
             GameProcess.Start();
+            GameData.Start();
         }
 
         /// <inheritdoc />
         public void Dispose()
         {
+            GameData.Dispose();
+            GameData = default;
+
             GameProcess.Dispose();
             GameProcess = default;
         }
