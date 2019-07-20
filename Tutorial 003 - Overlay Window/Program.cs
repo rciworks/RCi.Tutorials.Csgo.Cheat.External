@@ -1,5 +1,6 @@
 ﻿using System;
 using RCi.Tutorials.Csgo.Cheat.External.Data;
+using RCi.Tutorials.Csgo.Cheat.External.Gfx;
 
 namespace RCi.Tutorials.Csgo.Cheat.External
 {
@@ -13,6 +14,7 @@ namespace RCi.Tutorials.Csgo.Cheat.External
         #region // entry point
 
         /// <summary />
+        [STAThread]
         public static void Main() => new Program().Run();
 
         #endregion
@@ -21,7 +23,12 @@ namespace RCi.Tutorials.Csgo.Cheat.External
 
         /// <inheritdoc cref="GameProcess"/>
         private GameProcess GameProcess { get; set; }
+
+        /// <inheritdoc cref="GameData"/>
         private GameData GameData { get; set; }
+
+        /// <inheritdoc cref="WindowOverlay"/>
+        private WindowOverlay WindowOverlay { get; set; }
 
         #endregion
 
@@ -39,14 +46,19 @@ namespace RCi.Tutorials.Csgo.Cheat.External
         {
             GameProcess = new GameProcess();
             GameData = new GameData(GameProcess);
+            WindowOverlay = new WindowOverlay(GameProcess);
 
             GameProcess.Start();
             GameData.Start();
+            WindowOverlay.Start();
         }
 
         /// <inheritdoc />
         public void Dispose()
         {
+            WindowOverlay.Dispose();
+            WindowOverlay = default;
+
             GameData.Dispose();
             GameData = default;
 

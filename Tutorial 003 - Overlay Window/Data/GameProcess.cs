@@ -98,9 +98,6 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Data
                 InvalidateWindow();
             }
 
-            Console.WriteLine(IsValid
-                ? $"0x{(int)Process.Handle:X8} {WindowRectangleClient.X} {WindowRectangleClient.Y} {WindowRectangleClient.Width} {WindowRectangleClient.Height}"
-                : "Game process invalid");
         }
 
         /// <summary>
