@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tutorial 006 - ESP Skeleton
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tutorial 007 - ESP HitBoxes", "Tutorial 007 - ESP HitBoxes\Tutorial 007 - ESP HitBoxes.csproj", "{EAE2D609-C43F-455E-8102-AC98E005C563}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tutorial 008 - Trigger Bot", "Tutorial 008 - Trigger Bot\Tutorial 008 - Trigger Bot.csproj", "{859621D3-DA61-4A36-8EDD-069AB6317776}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{EAE2D609-C43F-455E-8102-AC98E005C563}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EAE2D609-C43F-455E-8102-AC98E005C563}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EAE2D609-C43F-455E-8102-AC98E005C563}.Release|Any CPU.Build.0 = Release|Any CPU
+		{859621D3-DA61-4A36-8EDD-069AB6317776}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{859621D3-DA61-4A36-8EDD-069AB6317776}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{859621D3-DA61-4A36-8EDD-069AB6317776}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{859621D3-DA61-4A36-8EDD-069AB6317776}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
