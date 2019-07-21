@@ -3,6 +3,7 @@ using System.Windows.Threading;
 using Microsoft.DirectX;
 using Microsoft.DirectX.Direct3D;
 using RCi.Tutorials.Csgo.Cheat.External.Data;
+using RCi.Tutorials.Csgo.Cheat.External.Data.Internal;
 using RCi.Tutorials.Csgo.Cheat.External.Features;
 using RCi.Tutorials.Csgo.Cheat.External.Utils;
 
@@ -140,6 +141,7 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Gfx
             DrawFps();
             EspAimCrosshair.Draw(this);
             EspSkeleton.Draw(this);
+            EspHitBoxes.Draw(this);
         }
 
         /// <summary>
@@ -155,14 +157,21 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Gfx
         /// </summary>
         private void DrawWindowBorder()
         {
-            this.DrawPolylineScreen(new[]
-            {
+            this.DrawPolylineScreen
+            (
+                Color.LawnGreen,
                 new Vector3(0, 0, 0),
                 new Vector3(GameProcess.WindowRectangleClient.Width - 1, 0, 0),
                 new Vector3(GameProcess.WindowRectangleClient.Width - 1, GameProcess.WindowRectangleClient.Height - 1, 0),
                 new Vector3(0, GameProcess.WindowRectangleClient.Height - 1, 0),
-                new Vector3(0, 0, 0),
-            }, Color.LawnGreen);
+                new Vector3(0, 0, 0)
+            );
+        }
+
+        /// <inheritdoc cref="Player.MatrixViewProjectionViewport"/>
+        public Vector3 TransformWorldToScreen(Vector3 value)
+        {
+            return GameData.Player.MatrixViewProjectionViewport.Transform(value);
         }
 
         #endregion

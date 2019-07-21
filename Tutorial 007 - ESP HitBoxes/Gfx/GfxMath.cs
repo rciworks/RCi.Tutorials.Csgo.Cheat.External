@@ -1,25 +1,101 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using Microsoft.DirectX;
 using Microsoft.DirectX.Direct3D;
+using RCi.Tutorials.Csgo.Cheat.External.Utils;
 
 namespace RCi.Tutorials.Csgo.Cheat.External.Gfx
 {
     public static class GfxMath
     {
         /// <summary>
-        /// Get viewport matrix.
+        /// Angle between vectors.
         /// </summary>
-        public static Matrix GetMatrixViewport(Size screenSize)
+        public static float AngleTo(this Vector3 vector, Vector3 other)
         {
-            return GetMatrixViewport(new Viewport
+            vector.Normalize();
+            other.Normalize();
+            return (float)Math.Acos(Vector3.Dot(vector, other));
+        }
+
+        /// <summary>
+        /// Get 3d circle vertices.
+        /// </summary>
+        public static Vector3[] GetCircleVertices(Vector3 origin, Vector3 normal, double radius, int segments)
+        {
+            var matrixLocalToWorld = GetOrthogonalMatrix(normal, origin);
+            var vertices = GetCircleVertices2D(new Vector3(), radius, segments);
+            for (var i = 0; i < vertices.Length; i++)
             {
-                X = 0,
-                Y = 0,
-                Width = screenSize.Width,
-                Height = screenSize.Height,
-                MinZ = 0,
-                MaxZ = 1,
-            });
+                vertices[i] = matrixLocalToWorld.Transform(vertices[i]);
+            }
+            return vertices;
+        }
+
+        /// <summary>
+        /// Get 2d (flat) circle vertices (x,y,0).
+        /// </summary>
+        public static Vector3[] GetCircleVertices2D(Vector3 origin, double radius, int segments)
+        {
+            var vertices = new Vector3[segments + 1];
+            var step = Math.PI * 2 / segments;
+            for (var i = 0; i < segments; i++)
+            {
+                var theta = step * i;
+                vertices[i] = new Vector3
+                (
+                    (float)(origin.X + radius * Math.Cos(theta)),
+                    (float)(origin.Y + radius * Math.Sin(theta)),
+                    0
+                );
+            }
+            vertices[segments] = vertices[0];
+            return vertices;
+        }
+
+        /// <summary>
+        /// Get half-sphere vertices.
+        /// </summary>
+        /// <returns>
+        /// Returns array of 3d circles. Each circle is array of vertices.
+        /// </returns>
+        public static Vector3[][] GetHalfSphere(Vector3 origin, Vector3 normal, float radius, int segments, int layers)
+        {
+            normal.Normalize();
+            var verticesByLayer = new Vector3[layers][];
+            for (var layerId = 0; layerId < layers; layerId++)
+            {
+                var radiusLayer = radius - layerId * (radius / layers);
+                var originLayer = origin + normal * ((float)Math.Cos(Math.Asin(radiusLayer / radius)) * radius);
+                verticesByLayer[layerId] = GetCircleVertices(originLayer, normal, radiusLayer, segments);
+            }
+            return verticesByLayer;
+        }
+
+        /// <summary>
+        /// Get matrix from given axis and origin.
+        /// </summary>
+        public static Matrix GetMatrix(Vector3 xAxis, Vector3 yAxis, Vector3 zAxis, Vector3 origin)
+        {
+            return new Matrix
+            {
+                M11 = xAxis.X,
+                M12 = xAxis.Y,
+                M13 = xAxis.Z,
+
+                M21 = yAxis.X,
+                M22 = yAxis.Y,
+                M23 = yAxis.Z,
+
+                M31 = zAxis.X,
+                M32 = zAxis.Y,
+                M33 = zAxis.Z,
+
+                M41 = origin.X,
+                M42 = origin.Y,
+                M43 = origin.Z,
+                M44 = 1,
+            };
         }
 
         /// <summary>
@@ -48,6 +124,92 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Gfx
                 M42 = viewport.Y + viewport.Height * 0.5f,
                 M43 = viewport.MinZ,
                 M44 = 1
+            };
+        }
+
+        /// <summary>
+        /// Get viewport matrix.
+        /// </summary>
+        public static Matrix GetMatrixViewport(Size screenSize)
+        {
+            return GetMatrixViewport(new Viewport
+            {
+                X = 0,
+                Y = 0,
+                Width = screenSize.Width,
+                Height = screenSize.Height,
+                MinZ = 0,
+                MaxZ = 1,
+            });
+        }
+
+        /// <summary>
+        /// Get orthogonal axis from given normal.
+        /// </summary>
+        public static void GetOrthogonalAxis(Vector3 normal, out Vector3 xAxis, out Vector3 yAxis, out Vector3 zAxis)
+        {
+            normal.Normalize();
+
+            var axisZ = new Vector3(0, 0, 1);
+            var angleToAxisZ = normal.AngleTo(axisZ);
+            if (angleToAxisZ < Math.PI * 0.25 || angleToAxisZ > Math.PI * 0.75)
+            {
+                // too close to z-axis, use y-axis
+                xAxis = Vector3.Cross(new Vector3(0, 1, 0), normal);
+            }
+            else
+            {
+                // use z-axis
+                xAxis = Vector3.Cross(normal, axisZ);
+            }
+            xAxis.Normalize();
+
+            yAxis = Vector3.Cross(normal, xAxis);
+            yAxis.Normalize();
+
+            zAxis = normal;
+        }
+
+        /// <summary>
+        /// Get orthogonal matrix from given normal and origin.
+        /// </summary>
+        public static Matrix GetOrthogonalMatrix(Vector3 normal, Vector3 origin)
+        {
+            GetOrthogonalAxis(normal, out var xAxis, out var yAxis, out var zAxis);
+            return GetMatrix(xAxis, yAxis, zAxis, origin);
+        }
+
+        /// <summary>
+        /// Check if vector is valid to draw in screen space.
+        /// </summary>
+        public static bool IsValidScreen(this Vector3 value)
+        {
+            return !value.X.IsInfinityOrNaN() && !value.Y.IsInfinityOrNaN() && value.Z >= 0 && value.Z < 1;
+        }
+
+        /// <summary>
+        /// Convert to matrix 4x4.
+        /// </summary>
+        public static Matrix ToMatrix(this in Data.Raw.matrix3x4_t matrix)
+        {
+            return new Matrix
+            {
+                M11 = matrix.m00,
+                M12 = matrix.m01,
+                M13 = matrix.m02,
+
+                M21 = matrix.m10,
+                M22 = matrix.m11,
+                M23 = matrix.m12,
+
+                M31 = matrix.m20,
+                M32 = matrix.m21,
+                M33 = matrix.m22,
+
+                M41 = matrix.m30,
+                M42 = matrix.m31,
+                M43 = matrix.m32,
+                M44 = 1,
             };
         }
 

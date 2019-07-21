@@ -75,6 +75,7 @@
     <Compile Include="Data\Raw\studiohdr_t.cs" />
     <Compile Include="Data\Raw\Team.cs" />
     <Compile Include="Features\EspAimCrosshair.cs" />
+    <Compile Include="Features\EspHitBoxes.cs" />
     <Compile Include="Features\EspSkeleton.cs" />
     <Compile Include="Gfx\DeviceExtensions.cs" />
     <Compile Include="Gfx\GfxMath.cs" />

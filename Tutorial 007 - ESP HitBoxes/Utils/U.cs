@@ -97,14 +97,6 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Utils
         }
 
         /// <summary>
-        /// Check if vector is valid to draw in screen space.
-        /// </summary>
-        public static bool IsValidScreen(this Microsoft.DirectX.Vector3 value)
-        {
-            return !value.X.IsInfinityOrNaN() && !value.Y.IsInfinityOrNaN() && value.Z >= 0 && value.Z < 1;
-        }
-
-        /// <summary>
         /// Read process memory.
         /// </summary>
         public static T Read<T>(this System.Diagnostics.Process process, IntPtr lpBaseAddress)
@@ -132,32 +124,6 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Utils
             var buffer = (object)default(T);
             Kernel32.ReadProcessMemory(hProcess, lpBaseAddress, buffer, size, out var lpNumberOfBytesRead);
             return lpNumberOfBytesRead == size ? (T)buffer : default;
-        }
-
-        /// <summary>
-        /// Convert to matrix 4x4.
-        /// </summary>
-        public static Microsoft.DirectX.Matrix ToMatrix(this in Data.Raw.matrix3x4_t matrix)
-        {
-            return new Microsoft.DirectX.Matrix
-            {
-                M11 = matrix.m00,
-                M12 = matrix.m01,
-                M13 = matrix.m02,
-
-                M21 = matrix.m10,
-                M22 = matrix.m11,
-                M23 = matrix.m12,
-
-                M31 = matrix.m20,
-                M32 = matrix.m21,
-                M33 = matrix.m22,
-
-                M41 = matrix.m30,
-                M42 = matrix.m31,
-                M43 = matrix.m32,
-                M44 = 1,
-            };
         }
 
         /// <summary>

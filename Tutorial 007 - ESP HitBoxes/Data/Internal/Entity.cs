@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using Microsoft.DirectX;
 using RCi.Tutorials.Csgo.Cheat.External.Data.Raw;
+using RCi.Tutorials.Csgo.Cheat.External.Gfx;
 using RCi.Tutorials.Csgo.Cheat.External.Utils;
 
 namespace RCi.Tutorials.Csgo.Cheat.External.Data.Internal
