@@ -97,7 +97,6 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Data
             {
                 InvalidateWindow();
             }
-
         }
 
         /// <summary>

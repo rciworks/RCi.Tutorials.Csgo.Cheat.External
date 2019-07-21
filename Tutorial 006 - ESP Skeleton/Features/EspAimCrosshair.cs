@@ -12,8 +12,6 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Features
         /// <summary>
         /// Get aim crosshair in screen space.
         /// </summary>
-        /// <param name="graphics"></param>
-        /// <returns></returns>
         public static Vector3 GetPositionScreen(Graphics graphics)
         {
             var screenSize = graphics.GameProcess.WindowRectangleClient.Size;

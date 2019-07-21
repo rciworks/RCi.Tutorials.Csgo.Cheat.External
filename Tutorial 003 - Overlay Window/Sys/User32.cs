@@ -50,7 +50,6 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Sys
         /// Retrieves a handle to the foreground window (the window with which the user is currently working).
         /// The system assigns a slightly higher priority to the thread that creates the foreground window than it does to other threads.
         /// </summary>
-        /// <returns></returns>
         [DllImport("user32.dll", SetLastError = true)]
         public static extern IntPtr GetForegroundWindow();
 

@@ -31,7 +31,6 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Utils
         /// <inheritdoc />
         public void Dispose()
         {
-            Process.Dispose();
             Process = default;
 
             ProcessModule.Dispose();

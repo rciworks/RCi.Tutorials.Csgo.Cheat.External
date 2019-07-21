@@ -43,8 +43,6 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Utils
         /// <summary>
         /// Check if value is infinity or NaN.
         /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
         public static bool IsInfinityOrNaN(this float value)
         {
             return float.IsNaN(value) || float.IsInfinity(value);
