@@ -77,6 +77,7 @@
     <Compile Include="Features\EspAimCrosshair.cs" />
     <Compile Include="Features\EspHitBoxes.cs" />
     <Compile Include="Features\EspSkeleton.cs" />
+    <Compile Include="Features\TriggerBot.cs" />
     <Compile Include="Gfx\DeviceExtensions.cs" />
     <Compile Include="Gfx\Math\GfxMath.cs" />
     <Compile Include="Gfx\Graphics.cs" />

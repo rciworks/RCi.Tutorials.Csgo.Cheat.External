@@ -1,5 +1,6 @@
 ﻿using System;
 using RCi.Tutorials.Csgo.Cheat.External.Data;
+using RCi.Tutorials.Csgo.Cheat.External.Features;
 using RCi.Tutorials.Csgo.Cheat.External.Gfx;
 
 namespace RCi.Tutorials.Csgo.Cheat.External
@@ -33,6 +34,9 @@ namespace RCi.Tutorials.Csgo.Cheat.External
         /// <inheritdoc cref="Graphics"/>
         private Graphics Graphics { get; set; }
 
+        /// <inheritdoc cref="TriggerBot"/>
+        private TriggerBot TriggerBot { get; set; }
+
         #endregion
 
         #region // ctor
@@ -51,16 +55,21 @@ namespace RCi.Tutorials.Csgo.Cheat.External
             GameData = new GameData(GameProcess);
             WindowOverlay = new WindowOverlay(GameProcess);
             Graphics = new Graphics(WindowOverlay, GameProcess, GameData);
+            TriggerBot = new TriggerBot(GameProcess, GameData);
 
             GameProcess.Start();
             GameData.Start();
             WindowOverlay.Start();
             Graphics.Start();
+            TriggerBot.Start();
         }
 
         /// <inheritdoc />
         public void Dispose()
         {
+            TriggerBot.Dispose();
+            TriggerBot = default;
+
             Graphics.Dispose();
             Graphics = default;
 
