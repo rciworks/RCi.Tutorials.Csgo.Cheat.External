@@ -2,6 +2,7 @@
 using System.Linq;
 using Microsoft.DirectX;
 using Microsoft.DirectX.Direct3D;
+using RCi.Tutorials.Csgo.Cheat.External.Gfx.Math;
 
 namespace RCi.Tutorials.Csgo.Cheat.External.Gfx
 {

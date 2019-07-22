@@ -5,6 +5,7 @@ using Microsoft.DirectX.Direct3D;
 using RCi.Tutorials.Csgo.Cheat.External.Data;
 using RCi.Tutorials.Csgo.Cheat.External.Data.Internal;
 using RCi.Tutorials.Csgo.Cheat.External.Features;
+using RCi.Tutorials.Csgo.Cheat.External.Gfx.Math;
 using RCi.Tutorials.Csgo.Cheat.External.Utils;
 
 namespace RCi.Tutorials.Csgo.Cheat.External.Gfx

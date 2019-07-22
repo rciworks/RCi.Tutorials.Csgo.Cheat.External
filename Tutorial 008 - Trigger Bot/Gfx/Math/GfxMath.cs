@@ -1,10 +1,9 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using Microsoft.DirectX;
 using Microsoft.DirectX.Direct3D;
 using RCi.Tutorials.Csgo.Cheat.External.Utils;
 
-namespace RCi.Tutorials.Csgo.Cheat.External.Gfx
+namespace RCi.Tutorials.Csgo.Cheat.External.Gfx.Math
 {
     public static class GfxMath
     {
@@ -15,7 +14,7 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Gfx
         {
             vector.Normalize();
             other.Normalize();
-            return (float)Math.Acos(Vector3.Dot(vector, other));
+            return (float)System.Math.Acos(Vector3.Dot(vector, other));
         }
 
         /// <summary>
@@ -38,14 +37,14 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Gfx
         public static Vector3[] GetCircleVertices2D(Vector3 origin, double radius, int segments)
         {
             var vertices = new Vector3[segments + 1];
-            var step = Math.PI * 2 / segments;
+            var step = System.Math.PI * 2 / segments;
             for (var i = 0; i < segments; i++)
             {
                 var theta = step * i;
                 vertices[i] = new Vector3
                 (
-                    (float)(origin.X + radius * Math.Cos(theta)),
-                    (float)(origin.Y + radius * Math.Sin(theta)),
+                    (float)(origin.X + radius * System.Math.Cos(theta)),
+                    (float)(origin.Y + radius * System.Math.Sin(theta)),
                     0
                 );
             }
@@ -66,7 +65,7 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Gfx
             for (var layerId = 0; layerId < layers; layerId++)
             {
                 var radiusLayer = radius - layerId * (radius / layers);
-                var originLayer = origin + normal * ((float)Math.Cos(Math.Asin(radiusLayer / radius)) * radius);
+                var originLayer = origin + normal * ((float)System.Math.Cos(System.Math.Asin(radiusLayer / radius)) * radius);
                 verticesByLayer[layerId] = GetCircleVertices(originLayer, normal, radiusLayer, segments);
             }
             return verticesByLayer;
@@ -152,7 +151,7 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Gfx
 
             var axisZ = new Vector3(0, 0, 1);
             var angleToAxisZ = normal.AngleTo(axisZ);
-            if (angleToAxisZ < Math.PI * 0.25 || angleToAxisZ > Math.PI * 0.75)
+            if (angleToAxisZ < System.Math.PI * 0.25 || angleToAxisZ > System.Math.PI * 0.75)
             {
                 // too close to z-axis, use y-axis
                 xAxis = Vector3.Cross(new Vector3(0, 1, 0), normal);

@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.DirectX;
-using RCi.Tutorials.Csgo.Cheat.External.Gfx;
+using RCi.Tutorials.Csgo.Cheat.External.Gfx.Math;
 using RCi.Tutorials.Csgo.Cheat.External.Utils;
 
 namespace RCi.Tutorials.Csgo.Cheat.External.Data.Internal

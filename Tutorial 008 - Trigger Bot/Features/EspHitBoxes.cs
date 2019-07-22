@@ -2,6 +2,7 @@
 using RCi.Tutorials.Csgo.Cheat.External.Data.Internal;
 using RCi.Tutorials.Csgo.Cheat.External.Data.Raw;
 using RCi.Tutorials.Csgo.Cheat.External.Gfx;
+using RCi.Tutorials.Csgo.Cheat.External.Gfx.Math;
 using Graphics = RCi.Tutorials.Csgo.Cheat.External.Gfx.Graphics;
 
 namespace RCi.Tutorials.Csgo.Cheat.External.Features
