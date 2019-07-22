@@ -38,6 +38,22 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Sys
         public static extern bool ClientToScreen(IntPtr hWnd, out Point lpPoint);
 
         /// <summary>
+        /// Determines whether a key is up or down at the time the function is called,
+        /// and whether the key was pressed after a previous call to GetAsyncKeyState.
+        /// </summary>
+        /// <returns>
+        /// If the function succeeds, the return value specifies whether the key was pressed since the last call to GetAsyncKeyState,
+        /// and whether the key is currently up or down. If the most significant bit is set, the key is down,
+        /// and if the least significant bit is set, the key was pressed after the previous call to GetAsyncKeyState.
+        /// However, you should not rely on this last behavior; for more information, see the Remarks.
+        /// The return value is zero for the following cases:
+        /// * The current desktop is not the active desktop
+        /// * The foreground thread belongs to another process and the desktop does not allow the hook or the journal record.
+        /// </returns>
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern short GetAsyncKeyState(int vKey);
+
+        /// <summary>
         /// Retrieves the coordinates of a window's client area. The client coordinates
         /// specify the upper-left and lower-right corners of the client area.
         /// Because client coordinates are relative to the upper-left corner of

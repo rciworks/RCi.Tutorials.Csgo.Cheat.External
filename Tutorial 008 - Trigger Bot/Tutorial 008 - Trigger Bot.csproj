@@ -88,6 +88,7 @@
     <Compile Include="Sys\Data\Margins.cs" />
     <Compile Include="Sys\Data\Point.cs" />
     <Compile Include="Sys\Data\Rect.cs" />
+    <Compile Include="Sys\Data\WindowsVirtualKey.cs" />
     <Compile Include="Sys\Dwmapi.cs" />
     <Compile Include="Sys\Kernel32.cs" />
     <Compile Include="Sys\User32.cs" />

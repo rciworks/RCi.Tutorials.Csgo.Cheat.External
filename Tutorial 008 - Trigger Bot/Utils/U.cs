@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Runtime.InteropServices;
 using RCi.Tutorials.Csgo.Cheat.External.Sys;
+using RCi.Tutorials.Csgo.Cheat.External.Sys.Data;
 
 namespace RCi.Tutorials.Csgo.Cheat.External.Utils
 {
@@ -74,6 +75,14 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Utils
         public static bool IsInfinityOrNaN(this float value)
         {
             return float.IsNaN(value) || float.IsInfinity(value);
+        }
+
+        /// <summary>
+        /// Is key Down?
+        /// </summary>
+        public static bool IsKeyDown(this WindowsVirtualKey key)
+        {
+            return (User32.GetAsyncKeyState((int)key) & 0x8000) != 0;
         }
 
         /// <summary>
