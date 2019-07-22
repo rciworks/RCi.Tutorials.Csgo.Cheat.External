@@ -12,9 +12,19 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Gfx.Math
         /// </summary>
         public static float AngleTo(this Vector3 vector, Vector3 other)
         {
-            vector.Normalize();
-            other.Normalize();
-            return (float)System.Math.Acos(Vector3.Dot(vector, other));
+            return (float)System.Math.Acos(vector.Normalized().Dot(other.Normalized()));
+        }
+
+        /// <inheritdoc cref="Vector3.Cross"/>
+        public static Vector3 Cross(this Vector3 left, Vector3 right)
+        {
+            return Vector3.Cross(left, right);
+        }
+
+        /// <inheritdoc cref="Vector3.Dot"/>
+        public static float Dot(this Vector3 left, Vector3 right)
+        {
+            return Vector3.Dot(left, right);
         }
 
         /// <summary>
@@ -147,26 +157,20 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Gfx.Math
         /// </summary>
         public static void GetOrthogonalAxis(Vector3 normal, out Vector3 xAxis, out Vector3 yAxis, out Vector3 zAxis)
         {
-            normal.Normalize();
-
-            var axisZ = new Vector3(0, 0, 1);
-            var angleToAxisZ = normal.AngleTo(axisZ);
+            zAxis = normal.Normalized();
+            var zAxisWorld = new Vector3(0, 0, 1);
+            var angleToAxisZ = zAxis.AngleTo(zAxisWorld);
             if (angleToAxisZ < System.Math.PI * 0.25 || angleToAxisZ > System.Math.PI * 0.75)
             {
                 // too close to z-axis, use y-axis
-                xAxis = Vector3.Cross(new Vector3(0, 1, 0), normal);
+                xAxis = new Vector3(0, 1, 0).Cross(zAxis).Normalized();
             }
             else
             {
                 // use z-axis
-                xAxis = Vector3.Cross(normal, axisZ);
+                xAxis = zAxis.Cross(zAxisWorld).Normalized();
             }
-            xAxis.Normalize();
-
-            yAxis = Vector3.Cross(normal, xAxis);
-            yAxis.Normalize();
-
-            zAxis = normal;
+            yAxis = zAxis.Cross(xAxis).Normalized();
         }
 
         /// <summary>
@@ -184,6 +188,12 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Gfx.Math
         public static bool IsValidScreen(this Vector3 value)
         {
             return !value.X.IsInfinityOrNaN() && !value.Y.IsInfinityOrNaN() && value.Z >= 0 && value.Z < 1;
+        }
+
+        /// <inheritdoc cref="Vector3.Normalize(Vector3)"/>
+        public static Vector3 Normalized(this Vector3 value)
+        {
+            return Vector3.Normalize(value);
         }
 
         /// <summary>

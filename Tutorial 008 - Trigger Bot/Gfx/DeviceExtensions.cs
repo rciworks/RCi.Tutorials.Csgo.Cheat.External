@@ -13,9 +13,7 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Gfx
     {
         public static void DrawCapsuleWorld(this Graphics graphics, Color color, Vector3 start, Vector3 end, float radius, int segments, int layers)
         {
-            var normal = end - start;
-            normal.Normalize();
-
+            var normal = (end - start).Normalized();
             var halfSphere0 = GfxMath.GetHalfSphere(start, -normal, radius, segments, layers);
             var halfSphere1 = GfxMath.GetHalfSphere(end, normal, radius, segments, layers);
 
@@ -57,9 +55,7 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Gfx
 
         private static void DrawCylinderSidesWorld(this Graphics graphics, Color color, Vector3 start, Vector3 end, float radius, int segments)
         {
-            var normal = end - start;
-            normal.Normalize();
-
+            var normal = (end - start).Normalized();
             var vertices0 = GfxMath.GetCircleVertices(start, normal, radius, segments);
             var vertices1 = GfxMath.GetCircleVertices(end, normal, radius, segments);
 

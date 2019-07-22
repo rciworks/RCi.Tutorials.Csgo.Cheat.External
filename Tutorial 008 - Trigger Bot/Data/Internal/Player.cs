@@ -104,12 +104,12 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Data.Internal
             var theta = (viewAngles.Y + aimPunchAngle.Y * Offsets.weapon_recoil_scale).DegreeToRadian();
 
             // https://en.wikipedia.org/wiki/Spherical_coordinate_system
-            return Vector3.Normalize(new Vector3
+            return new Vector3
             (
                 (float)(Math.Cos(phi) * Math.Cos(theta)),
                 (float)(Math.Cos(phi) * Math.Sin(theta)),
                 (float)-Math.Sin(phi)
-            ));
+            ).Normalized();
         }
 
         #endregion
