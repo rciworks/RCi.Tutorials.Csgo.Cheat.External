@@ -106,6 +106,38 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Utils
         }
 
         /// <summary>
+        /// Send mouse left down.
+        /// </summary>
+        public static unsafe void MouseLeftDown()
+        {
+            var mouseMoveInput = new Input
+            {
+                type = SendInputEventType.InputMouse,
+                mi =
+                {
+                    dwFlags = MouseEventFlags.MOUSEEVENTF_LEFTDOWN
+                },
+            };
+            User32.SendInput(1, ref mouseMoveInput, sizeof(Input));
+        }
+
+        /// <summary>
+        /// Send mouse left up.
+        /// </summary>
+        public static unsafe void MouseLeftUp()
+        {
+            var mouseMoveInput = new Input
+            {
+                type = SendInputEventType.InputMouse,
+                mi =
+                {
+                    dwFlags = MouseEventFlags.MOUSEEVENTF_LEFTUP
+                },
+            };
+            User32.SendInput(1, ref mouseMoveInput, sizeof(Input));
+        }
+
+        /// <summary>
         /// Read process memory.
         /// </summary>
         public static T Read<T>(this System.Diagnostics.Process process, IntPtr lpBaseAddress)

@@ -85,6 +85,12 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Sys
         public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 
         /// <summary>
+        /// Synthesizes keystrokes, mouse motions, and button clicks.
+        /// </summary>
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern uint SendInput(uint nInputs, ref Input pInputs, int cbSize);
+
+        /// <summary>
         /// Sets the opacity and transparency color key of a layered window.
         /// </summary>
         [DllImport("user32.dll", SetLastError = true)]

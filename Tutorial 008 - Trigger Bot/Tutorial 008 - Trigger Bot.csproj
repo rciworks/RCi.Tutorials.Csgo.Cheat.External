@@ -85,9 +85,15 @@
     <Compile Include="Offsets.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sys\Data\HardwareInput.cs" />
+    <Compile Include="Sys\Data\Input.cs" />
+    <Compile Include="Sys\Data\KeybdInput.cs" />
     <Compile Include="Sys\Data\Margins.cs" />
+    <Compile Include="Sys\Data\MouseEventFlags.cs" />
+    <Compile Include="Sys\Data\MouseInput.cs" />
     <Compile Include="Sys\Data\Point.cs" />
     <Compile Include="Sys\Data\Rect.cs" />
+    <Compile Include="Sys\Data\SendInputEventType.cs" />
     <Compile Include="Sys\Data\WindowsVirtualKey.cs" />
     <Compile Include="Sys\Dwmapi.cs" />
     <Compile Include="Sys\Kernel32.cs" />
