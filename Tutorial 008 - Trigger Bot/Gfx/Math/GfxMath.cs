@@ -183,6 +183,14 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Gfx.Math
         }
 
         /// <summary>
+        /// Is vector parallel to other vector?
+        /// </summary>
+        public static bool IsParallelTo(this Vector3 vector, Vector3 other, float tolerance = 1E-6f)
+        {
+            return System.Math.Abs(1.0 - System.Math.Abs(vector.Normalized().Dot(other.Normalized()))) <= tolerance;
+        }
+
+        /// <summary>
         /// Check if vector is valid to draw in screen space.
         /// </summary>
         public static bool IsValidScreen(this Vector3 value)

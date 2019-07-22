@@ -80,6 +80,7 @@
     <Compile Include="Gfx\DeviceExtensions.cs" />
     <Compile Include="Gfx\Math\GfxMath.cs" />
     <Compile Include="Gfx\Graphics.cs" />
+    <Compile Include="Gfx\Math\Line3D.cs" />
     <Compile Include="Gfx\WindowOverlay.cs" />
     <Compile Include="Offsets.cs" />
     <Compile Include="Program.cs" />
