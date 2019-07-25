@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using Microsoft.DirectX;
 using Microsoft.DirectX.Direct3D;
 using RCi.Tutorials.Csgo.Cheat.External.Utils;
@@ -8,11 +9,64 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Gfx.Math
     public static class GfxMath
     {
         /// <summary>
-        /// Angle between vectors.
+        /// Angle between 3d vectors.
         /// </summary>
         public static float AngleTo(this Vector3 vector, Vector3 other)
         {
-            return (float)System.Math.Acos(vector.Normalized().Dot(other.Normalized()));
+            return AngleBetweenUnitVectors(vector.Normalized(), other.Normalized());
+        }
+
+        /// <summary>
+        /// Angle between 3d unit vectors (normalized vectors).
+        /// </summary>
+        public static float AngleBetweenUnitVectors(Vector3 leftNormalized, Vector3 rightNormalized)
+        {
+            return AcosClamped(leftNormalized.Dot(rightNormalized));
+        }
+
+        /// <summary>
+        /// Signed angle between 3d vectors (about given vector).
+        /// </summary>
+        /// <remarks>
+        /// "https://en.wikipedia.org/wiki/3D_projection"
+        /// "https://en.wikipedia.org/wiki/Projection_(linear_algebra)"
+        /// </remarks>
+        public static float AngleToSigned(this Vector3 vector, Vector3 other, Vector3 about)
+        {
+            // validate
+            if (vector.IsParallelTo(about, 1E-9f))
+            {
+                throw new ArgumentException($"'{nameof(vector)}' is parallel to '{nameof(about)}'.");
+            }
+            if (other.IsParallelTo(about, 1E-9f))
+            {
+                throw new ArgumentException($"'{nameof(other)}' is parallel to '{nameof(about)}'.");
+            }
+
+            // project vectors on a plane
+            var plane = new Plane3D(about, new Vector3());
+            var vectorOnPlane = plane.ProjectVector(vector).vector.Normalized();
+            var otherOnPlane = plane.ProjectVector(other).vector.Normalized();
+
+            // get angle
+            var sign = vectorOnPlane.Cross(otherOnPlane).Normalized().Dot(plane.Normal);
+            return AngleBetweenUnitVectors(vectorOnPlane, otherOnPlane) * sign;
+        }
+
+        /// <summary>
+        /// <see cref="Math.Acos"/> with clamped [-1..1] value.
+        /// </summary>
+        public static float AcosClamped(float value, float tolerance = 1E-6f)
+        {
+            if (value > 1 - tolerance)
+            {
+                return 0;
+            }
+            if (value < tolerance - 1)
+            {
+                return (float)System.Math.PI;
+            }
+            return (float)System.Math.Acos(value);
         }
 
         /// <inheritdoc cref="Vector3.Cross"/>
@@ -174,6 +228,15 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Gfx.Math
         }
 
         /// <summary>
+        /// Get orthogonal matrix from given normal and origin.
+        /// </summary>
+        public static Matrix GetOrthogonalMatrix(Vector3 normal, Vector3 origin)
+        {
+            GetOrthogonalAxis(normal, out var xAxis, out var yAxis, out var zAxis);
+            return GetMatrix(xAxis, yAxis, zAxis, origin);
+        }
+
+        /// <summary>
         /// Get unit vector on a sphere from euler angles.
         /// https://en.wikipedia.org/wiki/Spherical_coordinate_system
         /// </summary>
@@ -185,15 +248,6 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Gfx.Math
                 (float)(System.Math.Cos(phi) * System.Math.Sin(theta)),
                 (float)-System.Math.Sin(phi)
             ).Normalized();
-        }
-
-        /// <summary>
-        /// Get orthogonal matrix from given normal and origin.
-        /// </summary>
-        public static Matrix GetOrthogonalMatrix(Vector3 normal, Vector3 origin)
-        {
-            GetOrthogonalAxis(normal, out var xAxis, out var yAxis, out var zAxis);
-            return GetMatrix(xAxis, yAxis, zAxis, origin);
         }
 
         /// <summary>
