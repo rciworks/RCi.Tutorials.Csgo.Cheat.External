@@ -39,6 +39,11 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Data.Internal
         public Vector3 EyePosition { get; private set; }
 
         /// <summary>
+        /// Eye direction (in world).
+        /// </summary>
+        public Vector3 EyeDirection { get; private set; }
+
+        /// <summary>
         /// View angles (in degrees).
         /// </summary>
         public Vector3 ViewAngles { get; private set; }
@@ -90,26 +95,14 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Data.Internal
             if (Fov == 0) Fov = 90; // correct for default
 
             // calc data
-            AimDirection = GetAimDirection(ViewAngles, AimPunchAngle);
+            EyeDirection = GfxMath.GetVectorFromEulerAngles(ViewAngles.X.DegreeToRadian(), ViewAngles.Y.DegreeToRadian());
+            AimDirection = GfxMath.GetVectorFromEulerAngles
+            (
+                (ViewAngles.X + AimPunchAngle.X * Offsets.weapon_recoil_scale).DegreeToRadian(),
+                (ViewAngles.Y + AimPunchAngle.Y * Offsets.weapon_recoil_scale).DegreeToRadian()
+            );
 
             return true;
-        }
-
-        /// <summary>
-        /// Get aim direction.
-        /// </summary>
-        private static Vector3 GetAimDirection(Vector3 viewAngles, Vector3 aimPunchAngle)
-        {
-            var phi = (viewAngles.X + aimPunchAngle.X * Offsets.weapon_recoil_scale).DegreeToRadian();
-            var theta = (viewAngles.Y + aimPunchAngle.Y * Offsets.weapon_recoil_scale).DegreeToRadian();
-
-            // https://en.wikipedia.org/wiki/Spherical_coordinate_system
-            return new Vector3
-            (
-                (float)(Math.Cos(phi) * Math.Cos(theta)),
-                (float)(Math.Cos(phi) * Math.Sin(theta)),
-                (float)-Math.Sin(phi)
-            ).Normalized();
         }
 
         #endregion

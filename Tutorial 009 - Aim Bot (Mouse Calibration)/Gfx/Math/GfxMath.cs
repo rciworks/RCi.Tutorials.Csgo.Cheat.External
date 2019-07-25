@@ -174,6 +174,20 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Gfx.Math
         }
 
         /// <summary>
+        /// Get unit vector on a sphere from euler angles.
+        /// https://en.wikipedia.org/wiki/Spherical_coordinate_system
+        /// </summary>
+        public static Vector3 GetVectorFromEulerAngles(double phi, double theta)
+        {
+            return new Vector3
+            (
+                (float)(System.Math.Cos(phi) * System.Math.Cos(theta)),
+                (float)(System.Math.Cos(phi) * System.Math.Sin(theta)),
+                (float)-System.Math.Sin(phi)
+            ).Normalized();
+        }
+
+        /// <summary>
         /// Get orthogonal matrix from given normal and origin.
         /// </summary>
         public static Matrix GetOrthogonalMatrix(Vector3 normal, Vector3 origin)
