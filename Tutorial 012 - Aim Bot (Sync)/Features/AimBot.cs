@@ -34,6 +34,12 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Features
         /// </summary>
         private static float AimBotFov { get; set; } = 10f.DegreeToRadian();
 
+        /// <summary>
+        /// Parameter to control smoothness of aim bot [1..N].
+        /// 1 = no smoothing, bigger number - more smoothing
+        /// </summary>
+        private float AimBotSmoothing { get; set; } = 3;
+
         /// <inheritdoc />
         protected override string ThreadName => nameof(AimBot);
 
@@ -213,6 +219,12 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Features
                     aimAngles = anglesToBone;
                     targetFound = true;
                 }
+            }
+
+            // smooth angles
+            if (targetFound)
+            {
+                aimAngles *= 1 / Math.Max(AimBotSmoothing, 1);
             }
 
             return targetFound;
