@@ -108,7 +108,7 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Utils
         /// <summary>
         /// Send mouse left down.
         /// </summary>
-        public static unsafe void MouseLeftDown()
+        public static void MouseLeftDown()
         {
             var mouseMoveInput = new Input
             {
@@ -118,13 +118,13 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Utils
                     dwFlags = MouseEventFlags.MOUSEEVENTF_LEFTDOWN
                 },
             };
-            User32.SendInput(1, ref mouseMoveInput, sizeof(Input));
+            User32.SendInput(1, ref mouseMoveInput, Marshal.SizeOf<Input>());
         }
 
         /// <summary>
         /// Send mouse left up.
         /// </summary>
-        public static unsafe void MouseLeftUp()
+        public static void MouseLeftUp()
         {
             var mouseMoveInput = new Input
             {
@@ -134,7 +134,7 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Utils
                     dwFlags = MouseEventFlags.MOUSEEVENTF_LEFTUP
                 },
             };
-            User32.SendInput(1, ref mouseMoveInput, sizeof(Input));
+            User32.SendInput(1, ref mouseMoveInput, Marshal.SizeOf<Input>());
         }
 
         /// <summary>
