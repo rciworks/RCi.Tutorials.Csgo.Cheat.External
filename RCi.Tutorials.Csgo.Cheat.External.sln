@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tutorial 007 - ESP HitBoxes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tutorial 008 - Trigger Bot", "Tutorial 008 - Trigger Bot\Tutorial 008 - Trigger Bot.csproj", "{859621D3-DA61-4A36-8EDD-069AB6317776}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tutorial 009 - Aim Bot (Mouse Calibration)", "Tutorial 009 - Aim Bot (Mouse Calibration)\Tutorial 009 - Aim Bot (Mouse Calibration).csproj", "{BBE4A70B-B638-4ACF-AE11-4F09B65D6AB1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{859621D3-DA61-4A36-8EDD-069AB6317776}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{859621D3-DA61-4A36-8EDD-069AB6317776}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{859621D3-DA61-4A36-8EDD-069AB6317776}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBE4A70B-B638-4ACF-AE11-4F09B65D6AB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBE4A70B-B638-4ACF-AE11-4F09B65D6AB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBE4A70B-B638-4ACF-AE11-4F09B65D6AB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBE4A70B-B638-4ACF-AE11-4F09B65D6AB1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
