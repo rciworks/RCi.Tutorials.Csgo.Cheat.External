@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Linq;
 using System.Threading;
+using Microsoft.DirectX;
 using RCi.Tutorials.Csgo.Cheat.External.Data;
 using RCi.Tutorials.Csgo.Cheat.External.Gfx.Math;
 using RCi.Tutorials.Csgo.Cheat.External.Sys.Data;
 using RCi.Tutorials.Csgo.Cheat.External.Utils;
+using Point = System.Drawing.Point;
 
 namespace RCi.Tutorials.Csgo.Cheat.External.Features
 {
@@ -20,6 +22,11 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Features
         /// Moving mouse one pixel will give this much of view angle change (in radians).
         /// </summary>
         private double AnglePerPixel { get; set; } = 0.00057596609244744;
+
+        /// <summary>
+        /// Bone id to aim for, 8 = head.
+        /// </summary>
+        private const int AimBoneId = 8;
 
         /// <inheritdoc />
         protected override string ThreadName => nameof(AimBot);
@@ -65,7 +72,114 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Features
             if (IsCalibrateHotKeyDown())
             {
                 Calibrate();
+                return;
             }
+
+            if (!WindowsVirtualKey.VK_LBUTTON.IsKeyDown())
+            {
+                // no mouse left down
+                return;
+            }
+
+            // get and validate aim target
+            if (!GetAimTarget(out var aimAngles))
+            {
+                return;
+            }
+
+            // get pixels to move
+            GetAimPixels(aimAngles, out var aimPixels);
+
+            // try to move mouse on a target
+            var wait = TryMouseMove(aimPixels);
+
+            // give time for csgo to process simulated input
+            if (wait)
+            {
+                // arbitrary amount of wait
+                Thread.Sleep(20);
+            }
+        }
+
+        /// <summary>
+        /// Get aim target.
+        /// </summary>
+        /// <param name="aimAngles">Euler angles to aim target (in radians).</param>
+        /// <returns>
+        /// <see langword="true"/> if aim target was found.
+        /// </returns>
+        private bool GetAimTarget(out Vector2 aimAngles)
+        {
+            var minAngleSize = float.MaxValue;
+            aimAngles = new Vector2((float)Math.PI, (float)Math.PI);
+            var targetFound = false;
+
+            foreach (var entity in GameData.Entities)
+            {
+                // validate
+                if (!entity.IsAlive() || entity.AddressBase == GameData.Player.AddressBase)
+                {
+                    continue;
+                }
+
+                // get angle to bone
+                GetAimAngles(entity.BonesPos[AimBoneId], out var angleToBoneSize, out var anglesToBone);
+
+                // check if it's closer
+                if (angleToBoneSize < minAngleSize)
+                {
+                    minAngleSize = angleToBoneSize;
+                    aimAngles = anglesToBone;
+                    targetFound = true;
+                }
+            }
+
+            return targetFound;
+        }
+
+        /// <summary>
+        /// Get aim angle to a point.
+        /// </summary>
+        /// <param name="pointWorld">A point (in world) to which aim angles are calculated.</param>
+        /// <param name="angleSize">Angle size (in radians) between aim direction and desired aim direction (direction to <see cref="pointWorld"/>).</param>
+        /// <param name="aimAngles">Euler angles to aim target (in radians).</param>
+        private void GetAimAngles(Vector3 pointWorld, out float angleSize, out Vector2 aimAngles)
+        {
+            var aimDirection = GameData.Player.AimDirection;
+            var aimDirectionDesired = (pointWorld - GameData.Player.EyePosition).Normalized();
+            angleSize = aimDirection.AngleTo(aimDirectionDesired);
+            aimAngles = new Vector2
+            (
+                aimDirectionDesired.AngleToSigned(aimDirection, new Vector3(0, 0, 1)),
+                aimDirectionDesired.AngleToSigned(aimDirection, aimDirectionDesired.Cross(new Vector3(0, 0, 1)).Normalized())
+            );
+        }
+
+        /// <summary>
+        /// Get pixels to move in a screen (from aim angles).
+        /// </summary>
+        private void GetAimPixels(Vector2 aimAngles, out Point aimPixels)
+        {
+            var fovRatio = 90.0 / GameData.Player.Fov;
+            aimPixels = new Point
+            (
+                (int)Math.Round(aimAngles.X / AnglePerPixel * fovRatio),
+                (int)Math.Round(aimAngles.Y / AnglePerPixel * fovRatio)
+            );
+        }
+
+        /// <summary>
+        /// Try to simulate mouse move.
+        /// </summary>
+        private bool TryMouseMove(Point aimPixels)
+        {
+            if (aimPixels.X == 0 && aimPixels.Y == 0)
+            {
+                return false;
+            }
+
+            U.MouseMove(aimPixels.X, aimPixels.Y);
+            return true;
         }
 
         #endregion
