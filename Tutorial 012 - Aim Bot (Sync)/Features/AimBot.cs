@@ -29,6 +29,11 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Features
         /// </summary>
         private const int AimBoneId = 8;
 
+        /// <summary>
+        /// Aim bot field of view (fov) to find targets (in radians).
+        /// </summary>
+        private static float AimBotFov { get; set; } = 10f.DegreeToRadian();
+
         /// <inheritdoc />
         protected override string ThreadName => nameof(AimBot);
 
@@ -194,6 +199,12 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Features
 
                 // get angle to bone
                 GetAimAngles(entity.BonesPos[AimBoneId], out var angleToBoneSize, out var anglesToBone);
+
+                // let it only be inside fov search space
+                if (angleToBoneSize > AimBotFov)
+                {
+                    continue;
+                }
 
                 // check if it's closer
                 if (angleToBoneSize < minAngleSize)
