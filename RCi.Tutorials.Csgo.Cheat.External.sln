@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tutorial 010 - Aim Bot (Asy
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tutorial 011 - Global Hook", "Tutorial 011 - Global Hook\Tutorial 011 - Global Hook.csproj", "{20CCDE9B-1545-4672-BC15-AEC9937E89ED}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tutorial 012 - Aim Bot (Sync)", "Tutorial 012 - Aim Bot (Sync)\Tutorial 012 - Aim Bot (Sync).csproj", "{93ECF242-B6E8-4489-8E17-ABA022C930B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,10 @@ Global
 		{20CCDE9B-1545-4672-BC15-AEC9937E89ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{20CCDE9B-1545-4672-BC15-AEC9937E89ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{20CCDE9B-1545-4672-BC15-AEC9937E89ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93ECF242-B6E8-4489-8E17-ABA022C930B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93ECF242-B6E8-4489-8E17-ABA022C930B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93ECF242-B6E8-4489-8E17-ABA022C930B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93ECF242-B6E8-4489-8E17-ABA022C930B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
