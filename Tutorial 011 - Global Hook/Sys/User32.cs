@@ -32,6 +32,13 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Sys
         public const int WS_EX_TRANSPARENT = 0x20;
 
         /// <summary>
+        /// Passes the hook information to the next hook procedure in the current hook chain.
+        /// A hook procedure can call this function either before or after processing the hook information.
+        /// </summary>
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern IntPtr CallNextHookEx(IntPtr idHook, int nCode, IntPtr wParam, IntPtr lParam);
+
+        /// <summary>
         /// The ClientToScreen function converts the client-area coordinates of a specified point to screen coordinates.
         /// </summary>
         [DllImport("user32.dll", SetLastError = true)]
@@ -97,10 +104,28 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Sys
         public static extern bool SetLayeredWindowAttributes(IntPtr hwnd, uint crKey, byte bAlpha, uint dwFlags);
 
         /// <summary>
+        /// Installs an application-defined hook procedure into a hook chain.
+        /// You would install a hook procedure to monitor the system for certain types of events.
+        /// These events are associated either with a specific thread or with all threads in the same desktop as the calling thread.
+        /// </summary>
+        /// <returns>
+        /// If the function succeeds, the return value is the handle to the hook procedure.
+        /// If the function fails, the return value is NULL.To get extended error information, call GetLastError.
+        /// </returns>
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern IntPtr SetWindowsHookEx(int idHook, HookProc callback, IntPtr hInstance, uint threadId);
+
+        /// <summary>
         /// Changes an attribute of the specified window.
         /// The function also sets the 32-bit (long) value at the specified offset into the extra window memory.
         /// </summary>
         [DllImport("user32.dll", SetLastError = true)]
         public static extern int SetWindowLong(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
+
+        /// <summary>
+        /// Removes a hook procedure installed in a hook chain by the SetWindowsHookEx function.
+        /// </summary>
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern bool UnhookWindowsHookEx(IntPtr hInstance);
     }
 }
