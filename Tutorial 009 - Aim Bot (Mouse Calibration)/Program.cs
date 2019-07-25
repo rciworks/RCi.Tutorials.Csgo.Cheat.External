@@ -37,6 +37,9 @@ namespace RCi.Tutorials.Csgo.Cheat.External
         /// <inheritdoc cref="TriggerBot"/>
         private TriggerBot TriggerBot { get; set; }
 
+        /// <inheritdoc cref="AimBot"/>
+        private AimBot AimBot { get; set; }
+
         #endregion
 
         #region // ctor
@@ -56,17 +59,22 @@ namespace RCi.Tutorials.Csgo.Cheat.External
             WindowOverlay = new WindowOverlay(GameProcess);
             Graphics = new Graphics(WindowOverlay, GameProcess, GameData);
             TriggerBot = new TriggerBot(GameProcess, GameData);
+            AimBot = new AimBot(GameProcess, GameData);
 
             GameProcess.Start();
             GameData.Start();
             WindowOverlay.Start();
             Graphics.Start();
             TriggerBot.Start();
+            AimBot.Start();
         }
 
         /// <inheritdoc />
         public void Dispose()
         {
+            AimBot.Dispose();
+            AimBot = default;
+
             TriggerBot.Dispose();
             TriggerBot = default;
 

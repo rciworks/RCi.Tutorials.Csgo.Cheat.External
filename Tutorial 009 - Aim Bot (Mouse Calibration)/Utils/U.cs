@@ -138,6 +138,24 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Utils
         }
 
         /// <summary>
+        /// Send mouse move.
+        /// </summary>
+        public static void MouseMove(int deltaX, int deltaY)
+        {
+            var mouseMoveInput = new Input
+            {
+                type = SendInputEventType.InputMouse,
+                mi =
+                {
+                    dwFlags = MouseEventFlags.MOUSEEVENTF_MOVE,
+                    dx = deltaX,
+                    dy = deltaY,
+                },
+            };
+            User32.SendInput(1, ref mouseMoveInput, Marshal.SizeOf<Input>());
+        }
+
+        /// <summary>
         /// Read process memory.
         /// </summary>
         public static T Read<T>(this System.Diagnostics.Process process, IntPtr lpBaseAddress)

@@ -74,6 +74,7 @@
     <Compile Include="Data\Raw\mstudiohitboxset_t.cs" />
     <Compile Include="Data\Raw\studiohdr_t.cs" />
     <Compile Include="Data\Raw\Team.cs" />
+    <Compile Include="Features\AimBot.cs" />
     <Compile Include="Features\EspAimCrosshair.cs" />
     <Compile Include="Features\EspHitBoxes.cs" />
     <Compile Include="Features\EspSkeleton.cs" />
