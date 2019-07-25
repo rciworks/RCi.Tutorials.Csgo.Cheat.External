@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{20CCDE9B-1545-4672-BC15-AEC9937E89ED}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>RCi.Tutorials.Csgo.Cheat.External</RootNamespace>
+    <AssemblyName>Tutorial 011 - Global Hook</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.DirectX, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Microsoft.DirectX.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.DirectX.Direct3D, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Microsoft.DirectX.Direct3D.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.DirectX.Direct3DX, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Microsoft.DirectX.Direct3DX.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Data\Internal\Entity.cs" />
+    <Compile Include="Data\Internal\EntityBase.cs" />
+    <Compile Include="Data\GameData.cs" />
+    <Compile Include="Data\GameProcess.cs" />
+    <Compile Include="Data\Internal\Player.cs" />
+    <Compile Include="Data\Raw\matrix3x4_t.cs" />
+    <Compile Include="Data\Raw\mstudiobbox_t.cs" />
+    <Compile Include="Data\Raw\mstudiobone_t.cs" />
+    <Compile Include="Data\Raw\mstudiohitboxset_t.cs" />
+    <Compile Include="Data\Raw\studiohdr_t.cs" />
+    <Compile Include="Data\Raw\Team.cs" />
+    <Compile Include="Features\AimBot.cs" />
+    <Compile Include="Features\EspAimCrosshair.cs" />
+    <Compile Include="Features\EspHitBoxes.cs" />
+    <Compile Include="Features\EspSkeleton.cs" />
+    <Compile Include="Features\TriggerBot.cs" />
+    <Compile Include="Gfx\DeviceExtensions.cs" />
+    <Compile Include="Gfx\Math\GfxMath.cs" />
+    <Compile Include="Gfx\Graphics.cs" />
+    <Compile Include="Gfx\Math\Line3D.cs" />
+    <Compile Include="Gfx\Math\Plane3D.cs" />
+    <Compile Include="Gfx\WindowOverlay.cs" />
+    <Compile Include="Offsets.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sys\Data\HardwareInput.cs" />
+    <Compile Include="Sys\Data\Input.cs" />
+    <Compile Include="Sys\Data\KeybdInput.cs" />
+    <Compile Include="Sys\Data\Margins.cs" />
+    <Compile Include="Sys\Data\MouseEventFlags.cs" />
+    <Compile Include="Sys\Data\MouseInput.cs" />
+    <Compile Include="Sys\Data\Point.cs" />
+    <Compile Include="Sys\Data\Rect.cs" />
+    <Compile Include="Sys\Data\SendInputEventType.cs" />
+    <Compile Include="Sys\Data\WindowsVirtualKey.cs" />
+    <Compile Include="Sys\Dwmapi.cs" />
+    <Compile Include="Sys\Kernel32.cs" />
+    <Compile Include="Sys\User32.cs" />
+    <Compile Include="Utils\FpsCounter.cs" />
+    <Compile Include="Utils\Module.cs" />
+    <Compile Include="Utils\ThreadedComponent.cs" />
+    <Compile Include="Utils\U.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
