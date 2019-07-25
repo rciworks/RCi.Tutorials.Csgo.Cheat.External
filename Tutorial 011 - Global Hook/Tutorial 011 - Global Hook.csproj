@@ -96,6 +96,7 @@
     <Compile Include="Sys\Data\Margins.cs" />
     <Compile Include="Sys\Data\MouseEventFlags.cs" />
     <Compile Include="Sys\Data\MouseInput.cs" />
+    <Compile Include="Sys\Data\MouseMessage.cs" />
     <Compile Include="Sys\Data\Point.cs" />
     <Compile Include="Sys\Data\Rect.cs" />
     <Compile Include="Sys\Data\SendInputEventType.cs" />

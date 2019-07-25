@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading;
 using Microsoft.DirectX;
 using RCi.Tutorials.Csgo.Cheat.External.Data;
 using RCi.Tutorials.Csgo.Cheat.External.Gfx.Math;
+using RCi.Tutorials.Csgo.Cheat.External.Sys;
 using RCi.Tutorials.Csgo.Cheat.External.Sys.Data;
 using RCi.Tutorials.Csgo.Cheat.External.Utils;
 using Point = System.Drawing.Point;
@@ -37,6 +39,11 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Features
         /// <inheritdoc cref="GameData"/>
         private GameData GameData { get; set; }
 
+        /// <summary>
+        /// Global mouse hook.
+        /// </summary>
+        private GlobalHook MouseHook { get; set; }
+
         #endregion
 
         #region // ctor
@@ -46,6 +53,7 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Features
         {
             GameProcess = gameProcess;
             GameData = gameData;
+            MouseHook = new GlobalHook(HookType.WH_MOUSE_LL, MouseHookCallback);
         }
 
         /// <inheritdoc />
@@ -53,13 +61,30 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Features
         {
             base.Dispose();
 
+            MouseHook.Dispose();
+            MouseHook = default;
+
             GameData = default;
+
             GameProcess = default;
         }
 
         #endregion
 
         #region // routines
+
+        /// <inheritdoc cref="HookProc"/>
+        private IntPtr MouseHookCallback(int nCode, IntPtr wParam, IntPtr lParam)
+        {
+            if (nCode >= 0)
+            {
+                var mouseMessage = (MouseMessage)wParam;
+                var mouseInput = Marshal.PtrToStructure<MouseInput>(lParam);
+                Console.WriteLine($"{mouseMessage} x={mouseInput.dx} y={mouseInput.dy}");
+            }
+
+            return User32.CallNextHookEx(MouseHook.HookHandle, nCode, wParam, lParam);
+        }
 
         /// <inheritdoc />
         protected override void FrameAction()
