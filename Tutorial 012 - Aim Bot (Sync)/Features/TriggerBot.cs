@@ -51,7 +51,7 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Features
         /// <summary>
         /// Is trigger bot hot key down?
         /// </summary>
-        private bool IsHotKeyDown()
+        public static bool IsHotKeyDown()
         {
             return WindowsVirtualKey.VK_MBUTTON.IsKeyDown();
         }

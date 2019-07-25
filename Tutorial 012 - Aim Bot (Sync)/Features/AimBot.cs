@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading;
 using Microsoft.DirectX;
 using RCi.Tutorials.Csgo.Cheat.External.Data;
@@ -44,6 +43,14 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Features
         /// </summary>
         private GlobalHook MouseHook { get; set; }
 
+        /// <summary>
+        /// Synchronization object for <see cref="State"/>.
+        /// </summary>
+        private readonly object StateLock = new object();
+
+        /// <inheritdoc cref="AimBotState"/>
+        private AimBotState State { get; set; }
+
         #endregion
 
         #region // ctor
@@ -76,20 +83,53 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Features
         /// <inheritdoc cref="HookProc"/>
         private IntPtr MouseHookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
-            if (nCode >= 0)
+            return nCode < 0 || ProcessMouseMessage((MouseMessage)wParam)
+                ? User32.CallNextHookEx(MouseHook.HookHandle, nCode, wParam, lParam)    // continue
+                : new IntPtr(1);                                                        // suppress
+        }
+
+        /// <summary>
+        /// Control <see cref="State"/> based on mouse input.
+        /// </summary>
+        private bool ProcessMouseMessage(MouseMessage mouseMessage)
+        {
+            if (mouseMessage == MouseMessage.WM_LBUTTONUP)
             {
-                var mouseMessage = (MouseMessage)wParam;
-                var mouseInput = Marshal.PtrToStructure<MouseInput>(lParam);
-                Console.WriteLine($"{mouseMessage} x={mouseInput.dx} y={mouseInput.dy}");
+                // left mouse up
+                lock (StateLock)
+                {
+                    // no matter what state it was before, we just released left mouse, therefore get to idle state
+                    State = AimBotState.Up;
+                }
+                return true;
             }
 
-            return User32.CallNextHookEx(MouseHook.HookHandle, nCode, wParam, lParam);
+            if (mouseMessage == MouseMessage.WM_LBUTTONDOWN)
+            {
+                if (!GameProcess.IsValid || !GameData.Player.IsAlive() || TriggerBot.IsHotKeyDown())
+                {
+                    return true;
+                }
+
+                // left mouse down
+                lock (StateLock)
+                {
+                    if (State == AimBotState.Up)
+                    {
+                        // change state and signal to not call CallNextHookEx (stop this left mouse down)
+                        State = AimBotState.DownSuppressed;
+                        return false;
+                    }
+                }
+            }
+
+            return true;
         }
 
         /// <inheritdoc />
         protected override void FrameAction()
         {
-            if (!GameProcess.IsValid)
+            if (!GameProcess.IsValid || !GameData.Player.IsAlive())
             {
                 return;
             }
@@ -100,23 +140,28 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Features
                 return;
             }
 
-            if (!WindowsVirtualKey.VK_LBUTTON.IsKeyDown())
+            lock (StateLock)
             {
-                // no mouse left down
-                return;
+                if (State == AimBotState.Up)
+                {
+                    // idle state, still waiting for suppressed state
+                    return;
+                }
             }
 
             // get and validate aim target
-            if (!GetAimTarget(out var aimAngles))
+            var aimPixels = Point.Empty;
+            if (GetAimTarget(out var aimAngles))
             {
-                return;
+                // get pixels to move
+                GetAimPixels(aimAngles, out aimPixels);
             }
 
-            // get pixels to move
-            GetAimPixels(aimAngles, out var aimPixels);
+            // try mouse down to get into normal state
+            var wait = TryMouseDown();
 
             // try to move mouse on a target
-            var wait = TryMouseMove(aimPixels);
+            wait |= TryMouseMove(aimPixels);
 
             // give time for csgo to process simulated input
             if (wait)
@@ -207,6 +252,30 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Features
             return true;
         }
 
+        /// <summary>
+        /// Try release suppressed mouse down.
+        /// </summary>
+        private bool TryMouseDown()
+        {
+            var mouseDown = false;
+
+            lock (StateLock)
+            {
+                if (State == AimBotState.DownSuppressed)
+                {
+                    mouseDown = true;
+                    State = AimBotState.Down;
+                }
+            }
+
+            if (mouseDown)
+            {
+                U.MouseLeftDown();
+            }
+
+            return mouseDown;
+        }
+
         #endregion
 
         #region // calibration
@@ -259,4 +328,29 @@ namespace RCi.Tutorials.Csgo.Cheat.External.Features
 
         #endregion
     }
+
+    #region // AimBotState
+
+    /// <summary>
+    /// Aim bot state.
+    /// </summary>
+    public enum AimBotState
+    {
+        /// <summary>
+        /// Hot key is up, waiting for it to be pressed.
+        /// </summary>
+        Up,
+
+        /// <summary>
+        /// Hot key was pressed and suppressed.
+        /// </summary>
+        DownSuppressed,
+
+        /// <summary>
+        /// Hot key down simulated (suppress released).
+        /// </summary>
+        Down,
+    }
+
+    #endregion
 }
