@@ -1,6 +1,6 @@
 // https://github.com/frk1/hazedumper/blob/master/csgo.cs
 
-dwClientState = 0x58FCFC
+dwClientState = 0x58ECFC
 dwClientState_ViewAngles = 0x4D88
 dwEntityList = 0x4D05AF4
 dwLocalPlayer = 0xCF3A4C
