@@ -12,7 +12,7 @@ using Point = System.Drawing.Point;
 namespace RCi.Tutorials.Csgo.Cheat.External.Features
 {
     /// <summary>
-    /// Trigger bot. Shoots when hovering over an enemy.
+    /// Aim bot. Aims towards enemy when active.
     /// </summary>
     public class AimBot :
         ThreadedComponent
